@@ -28,9 +28,9 @@ body {
   .input-wrapper {
     @apply mb-6   flex flex-row items-center justify-start gap-1;
   }
-  .input-field {
-    @apply w-full bg-[rgb(217,217,217)] opacity-70  px-3 py-2 border rounded-xl shadow-sm  text-[#000000] placeholder:text-[#000000] focus:outline-none;
-  }
+  /* .input-field {
+    @apply w-full bg-[rgb(217,217,217)] opacity-70  px-3 py-2  rounded-xl shadow-sm  text-[#000000] placeholder:text-[#000000] focus:outline-none;
+  } */
   .position-center {
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }

@@ -6,7 +6,7 @@ import { AppDispatch, RootState } from "@/store";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@chakra-ui/react";
+import { Box, Button, Heading, VStack } from "@chakra-ui/react";
 import { loginUser } from "@/features/auth/authSlice";
 import { FaLock, FaPhoneAlt } from "react-icons/fa";
 import CustomInput from "../CustomInput";
@@ -52,9 +52,9 @@ export default function LoginForm() {
     if (accessToken) {
       const decodedToken: DecodedToken = jwtDecode(accessToken);
       if (decodedToken.role === "ADMIN") {
-        router.push("/cd/admin/dashboard");
+        router.push("/ems/admin/dashboard");
       } else if (decodedToken.role === "EMPLOYEE") {
-        router.push("/cd/user/profile");
+        router.push("/ems/user/profile");
       }
     }
   }, [accessToken, router]);
@@ -64,67 +64,78 @@ export default function LoginForm() {
       .then(({ accessToken }) => {
         const decodedToken: DecodedToken = jwtDecode(accessToken);
         if (decodedToken.role === "ADMIN") {
-          router.push("/admin/dashboard");
+          router.push("/ems/admin/dashboard");
         } else if (decodedToken.role === "EMPLOYEE") {
-          router.push("/user/profile");
+          router.push("/ems/user/profile");
         }
       });
   };
   return (
     <form
+
       className=" min-w-[350px] max-sm:min-w-[220px]"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className=" flex justify-between items-center p-6 text-white">
-        <div className=" underline underline-offset-[8px]">
-          <p>Employee</p>
-        </div>
-        <div className=" underline underline-offset-[8px]">
-          <p>Admin</p>
-        </div>
-      </div>
-      <CustomInput
-        watch={watch}
-        name="phone"
-        type="tel"
-        placeholder="Enter phone number"
-        icon={<FaPhoneAlt color="gray.300" />}
-        register={register}
-        errors={errors}
-        isRequired
-        setError={setError}
-        clearErrors={clearErrors}
-        containerStyle={{ marginBottom: "16px" }}
-        inputStyle={{ backgroundColor: "#FFF" }}
-        inputClassName="custom-input-class"
-        errorStyle={{ color: "red" }}
-      />
-      <CustomInput
-        watch={watch}
-        name="password"
-        type="password"
-        placeholder="Enter password"
-        icon={<FaLock color="gray.300" />}
-        register={register}
-        errors={errors}
-        isPassword
-        isRequired
-        setError={setError}
-        clearErrors={clearErrors}
-        containerStyle={{ marginBottom: "16px" }}
-        inputStyle={{ backgroundColor: "#FFF" }}
-        inputClassName="custom-input-class"
-        errorStyle={{ color: "red" }}
-      />
-      <Button
+      <Box
+        bg="brand.background.paper"
+        p={6}
+        borderRadius="md"
+        boxShadow="md"
         width={"100%"}
-        colorScheme="blue"
-        type="submit"
-        isLoading={status === "loading"}
+        margin="auto"
+        borderWidth="1px"
+        borderColor="brand.border"
       >
-        Login
-      </Button>
-      {error && <p>{error}</p>}
+        <VStack spacing={6} align="stretch">
+          <Heading as="h2" size="xl" mb={4} textAlign="center" color="brand.primary.main">
+            Login
+          </Heading>
+        </VStack>
+        <CustomInput
+          watch={watch}
+          name="phone"
+          type="tel"
+          placeholder="Enter phone number"
+          icon={<FaPhoneAlt color="gray.300" />}
+          register={register}
+          errors={errors}
+          isRequired
+          setError={setError}
+          clearErrors={clearErrors}
+          containerStyle={{ marginBottom: "16px" }}
+          inputStyle={{ backgroundColor: "#FFF" }}
+          inputClassName="custom-input-class"
+          errorStyle={{ color: "red" }} label={"Phone number"} />
+        <CustomInput
+          watch={watch}
+          name="password"
+          type="password"
+          placeholder="Enter password"
+          icon={<FaLock color="gray.300" />}
+          register={register}
+          errors={errors}
+          isPassword
+          isRequired
+          setError={setError}
+          clearErrors={clearErrors}
+          containerStyle={{ marginBottom: "16px" }}
+          inputStyle={{ backgroundColor: "#FFF" }}
+          inputClassName="custom-input-class"
+          errorStyle={{ color: "red" }} label={"Password"} />
+        <Button
+
+          color="white"
+          _hover={{ bg: 'brand.primary.dark' }}
+          size="lg"
+          width={"100%"}
+          colorScheme="blue"
+          type="submit"
+          isLoading={status === "loading"}
+        >
+          Login
+        </Button>
+      </Box>
+      {/* {error && <p>{error}</p>} */}
     </form>
   );
 }

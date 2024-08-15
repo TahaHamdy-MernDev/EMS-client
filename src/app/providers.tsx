@@ -14,13 +14,11 @@ export function Providers({
         toastOptions={{
           defaultOptions: {
             variant: 'top-accent',
-
             isClosable: true,
             duration: 4000,
           },
         }}
-        theme={theme}
-      >
+        theme={theme} cssVarsRoot={undefined}      >
         {children}
       </ChakraProvider>
     </Provider>

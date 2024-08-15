@@ -35,14 +35,14 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Dashboard", icon: FiHome, href: "/cd/admin/dashboard" }, 
-  { name: "Employees", icon: FiUsers, href: "/cd/admin/dashboard/employees" },
-  { name: "Permissions", icon: FiFileText, href: "/cd/admin/dashboard/permissions" },
-  { name: "Add Employee", icon: FiUserPlus, href: "/cd/admin/dashboard/add-employee" },
+  { name: "Dashboard", icon: FiHome, href: "/ems/admin/dashboard" }, 
+  { name: "Employees", icon: FiUsers, href: "/ems/admin/dashboard/employees" },
+  { name: "Permissions", icon: FiFileText, href: "/ems/admin/dashboard/permissions" },
+  { name: "Add Employee", icon: FiUserPlus, href: "/ems/admin/dashboard/add-employee" },
   {
     name: "Monthly Reports",
     icon: FiBarChart,
-    href: "/cd/admin/dashboard/monthly-reports",
+    href: "/ems/admin/dashboard/monthly-reports",
   },
   { name: "Logout", icon: FiLogOut, href: "/logout" },
 ];

@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={openSans.className}>
-        <main className=" min-h-svh bg-gradient-to-b overflow-hidden">
+        <main className=" min-h-svh bg-[#F5F5F5] overflow-hidden">
           <Providers>{children}</Providers>
         </main>
       </body>

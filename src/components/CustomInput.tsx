@@ -8,6 +8,7 @@ import {
   Button,
   FormErrorMessage,
   IconButton,
+  FormLabel,
 } from "@chakra-ui/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
@@ -26,6 +27,7 @@ interface CustomInputProps {
   register: UseFormRegister<any>;
   errors: FieldErrors<any>;
   name: string;
+  label:string;
   isPassword?: boolean;
   isRequired?: boolean;
   containerStyle?: CSSProperties;
@@ -51,6 +53,7 @@ const CustomInput = ({
   inputClassName = "",
   errorStyle = {},
   setError,
+  label,
   clearErrors,
   watch,
 }: CustomInputProps) => {
@@ -73,10 +76,13 @@ const CustomInput = ({
       isInvalid={!!errors[name]}
       isRequired={isRequired}
       style={containerStyle}
+     
     >
+          <FormLabel color="brand.text.primary">{label}</FormLabel>
       <InputGroup size="lg">
         <InputLeftElement pointerEvents="none">{icon}</InputLeftElement>
         <Input
+
           {...register(name, {
             onChange: handleChange,
             shouldUnregister: false,
@@ -85,8 +91,7 @@ const CustomInput = ({
           type={isPassword ? showPassword : type}
           placeholder={placeholder}
           name={name}
-          backgroundColor="#D9D9D9"
-          className={`input-field ${inputClassName}`}
+          border={'2px solid brand.primary.main'}
           style={inputStyle}
           autoComplete={isPassword ? "current-password" : type}
         />
@@ -106,7 +111,7 @@ const CustomInput = ({
           </InputRightElement>
         )}
       </InputGroup>
-      <FormErrorMessage style={errorStyle}>
+      <FormErrorMessage color="brand.error.main">
         {errors?.[name]?.message?.toString()}
       </FormErrorMessage>
     </FormControl>
