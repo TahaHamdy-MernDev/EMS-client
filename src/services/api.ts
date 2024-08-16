@@ -1,6 +1,7 @@
-import store from "@/store";
+import store from "@/reduxStore/store";
 import axios from "axios";
 import { fetchCsrfToken } from "@/utils/fetchCsrfToken";
+import { getAccessToken } from "@/utils/auth";
 
 class CustomError extends Error {
   response?: any;
@@ -23,9 +24,12 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
+    let token;
     const { auth } = store.getState();
-    if (auth.accessToken) {
-      config.headers.Authorization = `Bearer ${auth.accessToken}`;
+    token = auth.accessToken || getAccessToken();
+    console.log("api", token);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     const csrfToken = await fetchCsrfToken();
     config.headers["X-CSRF-Token"] = csrfToken;
@@ -70,5 +74,5 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(errorInstance);
   }
 );
-const Api = axiosInstance
-export default Api 
+const Api = axiosInstance;
+export default Api;

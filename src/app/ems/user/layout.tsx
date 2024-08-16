@@ -61,9 +61,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const textColor = useColorModeValue('brand.navbar.text', 'white');
 
   const menuItems = [
-    { icon: FaUserAlt, text: 'Profile', href: '/cd/user/profile' },
-    { icon: FaCalendarAlt, text: 'Attendance History', href: '/cd/user/attendance-history' },
-    { icon: FaLock, text: 'Request Permission', href: '/cd/user/request-permission' },
+    { icon: FaUserAlt, text: 'Profile', href: '/ems/user/profile' },
+    { icon: FaCalendarAlt, text: 'Attendance History', href: '/ems/user/attendance-history' },
+    { icon: FaLock, text: 'Request Permission', href: '/ems/user/request-permission' },
   ];
 
   return (

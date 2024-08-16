@@ -22,6 +22,9 @@ import {
 } from "@chakra-ui/react";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { getUserLocation } from "@/utils/getUserLocation";
+import { useAppDispatch } from "@/reduxStore/hook";
+import { getAttendance } from "@/features/actions/attendanceActions";
+import { getCurrentDay } from "@/utils/common";
 
 enum EmployeeDayStatus {
   NOT_STARTED = "NOT_STARTED",
@@ -38,6 +41,7 @@ enum EmployeeDayStatus {
 }
 
 interface AttendanceData {
+  actions: any;
   status: EmployeeDayStatus;
   checkIn: Date | null;
   checkOut: Date | null;
@@ -93,25 +97,21 @@ const CurrentDayAttendance: React.FC<CurrentDayAttendanceProps> = ({
 
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const dispatch = useAppDispatch();
+  const currentDay = getCurrentDay();
   useEffect(() => {
     const fetchAttendance = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       try {
-        const response = await new Promise<AttendanceData>((resolve) =>
-          setTimeout(
-            () =>
-              resolve({
-                status: EmployeeDayStatus.STARTED,
-                checkIn: new Date(new Date().setHours(14, 0, 0)),
-                checkOut: null,
-                totalHours: 0,
-                breaks: [],
-              }),
-            2000
-          )
-        );
-        setAttendance(response);
+        dispatch(getAttendance({ date: currentDay }))
+          .unwrap()
+          .then((res) => {
+            console.log("response:", res);
+            setAttendance(res);
+          })
+          .catch((err) => {
+            console.log("error:", err);
+          });
       } catch (error) {
         toast({
           title: "Error fetching attendance data",
@@ -125,21 +125,32 @@ const CurrentDayAttendance: React.FC<CurrentDayAttendanceProps> = ({
     };
 
     fetchAttendance();
-  }, [employeeId, toast]);
+  }, [currentDay, dispatch, employeeId, toast]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (attendance.status === EmployeeDayStatus.STARTED && attendance.checkIn) {
-      timer = setInterval(() => {
-        const now = new Date();
-        const elapsed = now.getTime() - attendance.checkIn!.getTime();
-        setElapsedTime(elapsed);
-      }, 1000);
+  
+    if (attendance.status === EmployeeDayStatus.STARTED) {
+      // Find the CHECK_IN action
+      const checkInAction = attendance.actions.find(
+        (action: { type: string; }) => action.type === 'CHECK_IN'
+      );
+  
+      if (checkInAction && checkInAction.time) {
+        const checkInTime = new Date(checkInAction.createdAt).getTime();
+  
+        timer = setInterval(() => {
+          const now = new Date().getTime();
+          const elapsed = now - checkInTime;
+          setElapsedTime(elapsed); // elapsed time in milliseconds
+        }, 1000);
+      }
     }
+  
     return () => clearInterval(timer);
-  }, [attendance.status, attendance.checkIn, attendance.breaks]);
-
-  const handleCheckIn = async() => {
+  }, [attendance.status, attendance.actions]);
+  
+  const handleCheckIn = async () => {
     const userLocation = await getUserLocation();
     const now = new Date();
     setAttendance((prev) => ({
@@ -155,9 +166,9 @@ const CurrentDayAttendance: React.FC<CurrentDayAttendanceProps> = ({
     });
   };
 
-  const handleCheckOut = async() => {
+  const handleCheckOut = async () => {
     const userLocation = await getUserLocation();
-    console.log(userLocation)
+    console.log(userLocation);
     onOpen();
   };
 

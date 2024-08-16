@@ -7,7 +7,7 @@ import { AppDispatch, RootState } from "@/store";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Heading, VStack } from "@chakra-ui/react";
-import { loginUser } from "@/features/auth/authSlice";
+import { loginUser } from "@/features/slices/authSlice";
 import { FaLock, FaPhoneAlt } from "react-icons/fa";
 import CustomInput from "../CustomInput";
 import { useRouter } from "next/navigation";
@@ -72,7 +72,6 @@ export default function LoginForm() {
   };
   return (
     <form
-
       className=" min-w-[350px] max-sm:min-w-[220px]"
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -87,7 +86,13 @@ export default function LoginForm() {
         borderColor="brand.border"
       >
         <VStack spacing={6} align="stretch">
-          <Heading as="h2" size="xl" mb={4} textAlign="center" color="brand.primary.main">
+          <Heading
+            as="h2"
+            size="xl"
+            mb={4}
+            textAlign="center"
+            color="brand.primary.main"
+          >
             Login
           </Heading>
         </VStack>
@@ -105,7 +110,9 @@ export default function LoginForm() {
           containerStyle={{ marginBottom: "16px" }}
           inputStyle={{ backgroundColor: "#FFF" }}
           inputClassName="custom-input-class"
-          errorStyle={{ color: "red" }} label={"Phone number"} />
+          errorStyle={{ color: "red" }}
+          label={"Phone number"}
+        />
         <CustomInput
           watch={watch}
           name="password"
@@ -121,11 +128,12 @@ export default function LoginForm() {
           containerStyle={{ marginBottom: "16px" }}
           inputStyle={{ backgroundColor: "#FFF" }}
           inputClassName="custom-input-class"
-          errorStyle={{ color: "red" }} label={"Password"} />
+          errorStyle={{ color: "red" }}
+          label={"Password"}
+        />
         <Button
-
           color="white"
-          _hover={{ bg: 'brand.primary.dark' }}
+          _hover={{ bg: "brand.primary.dark" }}
           size="lg"
           width={"100%"}
           colorScheme="blue"
