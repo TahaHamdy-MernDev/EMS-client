@@ -18,12 +18,12 @@ export function Providers({
             variant: "top-accent",
             duration: 3000,
             isClosable: true,
+            size:'md'
           },
         }}
       >
         {children}
       </ChakraProvider>
-      ;
     </Provider>
   );
 }

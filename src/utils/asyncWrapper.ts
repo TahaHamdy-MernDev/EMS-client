@@ -1,5 +1,4 @@
 import { standALoneToast } from "./toast";
-
 export const asyncWrapper = async <T>(
   asyncFn: () => Promise<T>,
   thunkAPI: any
@@ -41,7 +40,9 @@ export const asyncWrapper = async <T>(
             description: errorMessage,
           });
           break;
-
+        case 404:
+          errorMessage = response.data.message;
+          break;
         default:
           errorMessage =
             response.data.message || "An unexpected error occurred.";

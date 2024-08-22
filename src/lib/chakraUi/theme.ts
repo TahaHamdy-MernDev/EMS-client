@@ -1,6 +1,3 @@
-import { openSans, robotoMono, sourceCodePro } from "@/app/fonts";
-import { extendTheme } from "@chakra-ui/react";
-import { ButtonTheme, InputTheme } from "./customComponent";
 const breakpoints = {
   base: "0em", // 0px
   sm: "30em", // ~480px. em is a relative unit and is dependant on the font-size.
@@ -9,9 +6,13 @@ const breakpoints = {
   xl: "80em", // ~1280px
   "2xl": "96em", // ~1536px
 };
+import {  montserrat, openSans, sourceCodePro } from "@/app/fonts";
+import { extendTheme } from "@chakra-ui/react";
+import { ButtonTheme, InputTheme } from "./customComponent";
+
 export const theme = extendTheme({
   fonts: {
-    heading: robotoMono.style.fontFamily,
+    heading: montserrat.style.fontFamily,
     body: openSans.style.fontFamily,
     mono: sourceCodePro.style.fontFamily,
   },
@@ -47,9 +48,11 @@ export const theme = extendTheme({
         color: "text.dark",
         minHeight: "100svh",
       },
-      svg:{
-        color:"primary.dark"
-      }
+      svg: {
+        // width: "18px",
+        // height: "18px",
+        color: "primary.dark",
+      },
     },
   },
   components: {

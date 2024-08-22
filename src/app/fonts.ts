@@ -1,4 +1,10 @@
-import { Roboto_Mono, Open_Sans, Source_Code_Pro } from "next/font/google";
+import {
+  Roboto_Mono,
+  Open_Sans,
+  Source_Code_Pro,
+  Lato,
+  Montserrat,
+} from "next/font/google";
 
 export const robotoMono = Roboto_Mono({
   weight: ["300", "400", "500", "700"],
@@ -26,6 +32,26 @@ export const sourceCodePro = Source_Code_Pro({
   display: "swap",
   variable: "--font-sourceCodePro",
   fallback: ["Consolas", "Monaco", "monospace"],
+  preload: true,
+  adjustFontFallback: true,
+});
+
+export const lato = Lato({
+  weight: ["300", "400", "700"],
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-lato",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
+  preload: true,
+  adjustFontFallback: true,
+});
+
+export const montserrat = Montserrat({
+  weight: ["400", "700"],
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-montserrat",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
   preload: true,
   adjustFontFallback: true,
 });

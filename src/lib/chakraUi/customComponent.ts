@@ -62,9 +62,14 @@ export const ButtonTheme = defineStyleConfig({
         bg: "primary.dark",
         transform: "translateY(-1px)",
       },
+      _disabled: {
+        opacity: 0.6,
+        _hover: {
+          bg: "primary.main !important",
+        },
+      },
       _active: {
         bg: "primary.darker",
-        borderColor: "primary.darker",
       },
     },
     secondary: {
@@ -93,6 +98,62 @@ export const ButtonTheme = defineStyleConfig({
       _active: {
         bg: "red.700",
         borderColor: "red.700",
+      },
+    },
+    menuButton: {
+      bg: "gray.200",
+
+      border: "none",
+      _hover: { opacity: 0.8, fill: "white" },
+      _focus: { bg: "gray.200" },
+      _focusVisible: {
+        bg: "gray.200",
+        boxShadow: "none",
+        borderColor: "transparent",
+      },
+      _active: { bg: "gray.200", opacity: 0.8 },
+    },
+    checkIn: {
+      // fontSize: "md !important",
+      bg: "green.500",
+      color: "white",
+      border: "none",
+      fill: "text.white",
+      borderColor: "green.600",
+      _hover: {
+        bg: "green.600",
+      },
+      _active: {
+        bg: "green.700",
+      },
+      _disabled: {
+        opacity: 0.6,
+        cursor: "not-allowed",
+        _hover: {
+          bg: "green.500 !important",
+        },
+      },
+    },
+    checkOut: {
+      // fontSize: "md !important",
+      bg: "red.500",
+      color: "white",
+      border: "none",
+      fill: "text.white",
+      borderColor: "red.600",
+      _hover: {
+        bg: "red.600",
+      },
+      _active: {
+        bg: "red.700",
+        borderColor: "red.700",
+      },
+      _disabled: {
+        opacity: 0.6,
+        cursor: "not-allowed",
+        _hover: {
+          bg: "red.500 !important",
+        },
       },
     },
   },

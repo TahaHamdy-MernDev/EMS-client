@@ -1,7 +1,7 @@
 "use client";
 import { login } from "@/redux/actions/authActions";
 import { useAppDispatch, useAppSelector } from "@/redux/reduxHooks";
-import { Status } from "@/utils/enums";
+import { Roles, Status } from "@/utils/enums";
 import {
   Box,
   Button,
@@ -19,24 +19,43 @@ import {
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock, FaPhoneAlt } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { redirectUser } from "@/utils/helpers";
+import useFcmToken from "@/lib/firebase/useFCMToken";
+
 export interface ILoginFormInputs {
   phone: string;
   password: string;
+  deviceToken: string;
 }
 export default function Page() {
+  const { fcmToken } = useFcmToken();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { loginStatus, isAuthenticated, userRole } = useAppSelector(
+    (state) => state.auth
+  );
+  const { handleSubmit, register } = useForm<ILoginFormInputs>();
   const [show, setShow] = useState<boolean>(false);
   const handleClick = () => setShow(!show);
-  const dispatch = useAppDispatch();
-  const { loginStatus } = useAppSelector((state) => state.auth);
-  const { handleSubmit, register } = useForm<ILoginFormInputs>();
+  useEffect(() => {
+    if (isAuthenticated) {
+      return redirectUser(router, userRole);
+    }
+  });
   const onSubmit: SubmitHandler<ILoginFormInputs> = (data) => {
-    console.log(process.env.NEXT_PUBLIC_API_URL);
-    dispatch(login(data));
-    console.log(data);
+    data = { ...data, deviceToken: fcmToken };
+    dispatch(login(data))
+      .unwrap()
+      .then(async (res) => {
+        const role = res?.data?.role;
+        redirectUser(router, role);
+      });
   };
   return (
     <Container
       maxW="container.xl"
+      maxH={"100svh"}
       minH={"100svh"}
       display="flex"
       alignItems="center"

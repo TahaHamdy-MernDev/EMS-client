@@ -5,6 +5,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const login = createAsyncThunk(
   "auth/login",
   async (data: ILoginFormInputs, thunkAPI) => {
+    console.log(data);
     return asyncWrapper(async () => {
       const res = await Api.post("/auth/login", data);
       return res.data;
